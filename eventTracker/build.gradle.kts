@@ -65,8 +65,11 @@ dependencies {
 
 
     implementation(libs.androidx.material)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.play.services.maps)
+    implementation(libs.androidx.appcompat)
 
-    
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -86,4 +89,19 @@ dependencies {
     implementation (libs.androidx.datastore.preferences)
     implementation(libs.androidx.material.icons.extended)
     implementation(libs.androidx.navigation.compose)
+
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.coil.compose)
+
+    implementation(libs.google.accompanist.pager)
+    implementation(libs.accompanist.pager.indicators)
+
+    implementation(libs.accompanist.swiperefresh)
+
+    implementation(libs.zxing.android.embedded)
+    implementation(libs.core)
+
+
+
+
 }

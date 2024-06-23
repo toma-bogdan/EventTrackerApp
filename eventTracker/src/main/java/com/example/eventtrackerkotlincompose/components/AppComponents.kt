@@ -23,6 +23,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -86,7 +87,11 @@ fun HeadingTextComponent(value: String) {
 }
 
 @Composable
-fun CustomTextField(labelValue: String, imgVector: ImageVector) {
+fun CustomTextField(
+    labelValue: String,
+    imgVector: ImageVector,
+    onTextSelected: (String) -> Unit)
+{
     val textValue = remember {
         mutableStateOf("")
     }
@@ -107,6 +112,7 @@ fun CustomTextField(labelValue: String, imgVector: ImageVector) {
         maxLines = 1,
         onValueChange = {
             textValue.value = it
+            onTextSelected(it)
         },
         leadingIcon = {
             Icon(imageVector = imgVector, contentDescription = "")
@@ -115,7 +121,11 @@ fun CustomTextField(labelValue: String, imgVector: ImageVector) {
 }
 
 @Composable
-fun PasswordTextField(labelValue: String, imgVector: ImageVector) {
+fun PasswordTextField(
+    labelValue: String,
+    imgVector: ImageVector,
+    onTextSelected: (String) -> Unit
+) {
     val password = remember {
         mutableStateOf("")
     }
@@ -143,6 +153,7 @@ fun PasswordTextField(labelValue: String, imgVector: ImageVector) {
         },
         onValueChange = {
             password.value = it
+            onTextSelected(it)
         },
         leadingIcon = {
             Icon(imageVector = imgVector, contentDescription = "")
@@ -174,7 +185,6 @@ fun ButtonComponent(value: String, onButtonClicked: () -> Unit, isEnabled: Boole
             .fillMaxWidth()
             .heightIn(48.dp),
         onClick = {
-            Log.d("aaa","am apasat pe login")
             onButtonClicked()
         },
         contentPadding = PaddingValues(),
@@ -276,18 +286,21 @@ fun ClickableLoginTextComponent(tryingToLogin: Boolean = true, onTextSelected: (
 }
 
 @Composable
-fun UnderLinedTextComponent(value: String) {
-    Text(
-        text = value,
-        modifier = Modifier
-            .fillMaxWidth()
-            .heightIn(min = 40.dp),
-        style = TextStyle(
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Normal,
-            fontStyle = FontStyle.Normal
-        ), color = colorResource(id = R.color.colorGray),
-        textAlign = TextAlign.Center,
-        textDecoration = TextDecoration.Underline
-    )
+fun UnderLinedTextComponent(value: String, onTextSelected: () -> Unit) {
+    TextButton(
+        onClick = {onTextSelected()}) {
+        Text(
+            text = value,
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(min = 40.dp),
+            style = TextStyle(
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Normal,
+                fontStyle = FontStyle.Normal
+            ), color = colorResource(id = R.color.colorGray),
+            textAlign = TextAlign.Center,
+            textDecoration = TextDecoration.Underline
+        )
+    }
 }

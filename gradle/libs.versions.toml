@@ -1,6 +1,10 @@
 [versions]
+accompanistPagerVersion = "0.24.9-beta"
+accompanistSwiperefreshVersion = "0.24.3-alpha"
 agp = "8.4.0"
 arcgisMapsKotlin = "200.4.0"
+coilCompose = "2.2.0"
+coreVersion = "3.3.3"
 datastorePreferences = "1.1.1"
 kotlin = "1.9.23"
 coreKtx = "1.13.1"
@@ -18,19 +22,31 @@ lifecycleRuntimeKtx = "2.7.0"
 activityCompose = "1.9.0"
 composeBom = "2023.08.00"
 constraintlayoutCompose = "1.0.1"
+lifecycleViewmodelCompose = "2.8.0"
 material = "1.6.7"
 materialIconsExtended = "1.6.7"
 navigationCompose = "2.7.7"
+lifecycleLivedataKtx = "2.8.0"
+playServicesMaps = "18.2.0"
+qrgenVersion = "1.0.3"
+zxingAndroidEmbeddedVersion = "4.3.0"
+appcompatVersion = "1.7.0"
 
 [libraries]
+accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanistPagerVersion" }
+accompanist-swiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanistSwiperefreshVersion" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
+androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
 androidx-material = { module = "androidx.compose.material:material", version.ref = "material" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 arcgis-maps-kotlin = { module = "com.esri:arcgis-maps-kotlin", version.ref = "arcgisMapsKotlin" }
 arcgis-maps-kotlin-toolkit-authentication = { module = "com.esri:arcgis-maps-kotlin-toolkit-authentication", version.ref = "arcgisMapsKotlin" }
 arcgis-maps-kotlin-toolkit-geoview-compose = { module = "com.esri:arcgis-maps-kotlin-toolkit-geoview-compose", version.ref = "arcgisMapsKotlin" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
+core = { module = "com.google.zxing:core", version.ref = "coreVersion" }
+google-accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanistPagerVersion" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -52,6 +68,11 @@ ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "k
 ktor-client-serialization = { module = "io.ktor:ktor-client-serialization", version.ref = "ktorClientSerialization" }
 androidx-constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constraintlayoutCompose" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktorSerializationKotlinxJson" }
+androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
+play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
+qrgen = { module = "androidmads.library.qrgenearator:QRGen", version.ref = "qrgenVersion" }
+zxing-android-embedded = { module = "com.journeyapps:zxing-android-embedded", version.ref = "zxingAndroidEmbeddedVersion" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompatVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
