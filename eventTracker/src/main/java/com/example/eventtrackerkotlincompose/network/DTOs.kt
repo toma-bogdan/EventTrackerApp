@@ -61,7 +61,8 @@ data class Event(
     val endDate: LocalDate,
     val description: String? = null,
     val imageUrl: String? = null,
-    val category: Category? = null
+    val category: Category? = null,
+    val scannedTickets: Int = 0
 )
 
 @Serializable

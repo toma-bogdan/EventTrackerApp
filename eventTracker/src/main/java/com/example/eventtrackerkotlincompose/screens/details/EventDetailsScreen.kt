@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -94,6 +93,8 @@ fun EventDetailScreen(
     viewModel.organizer.collectAsState()
     var isEditMode by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
+    var showDialog by remember { mutableStateOf(false) }
+    val currentDate = LocalDate.now()
 
     Scaffold(
         topBar = {
@@ -105,17 +106,12 @@ fun EventDetailScreen(
                     }
                 },
                 actions = {
-                    if (user?.role == Role.ORGANIZER && viewModel.eventBelongsToOrganizer) {
+                    if (user?.role == Role.ORGANIZER && viewModel.eventBelongsToOrganizer && (event!!.startDate > currentDate)) {
                         Row {
                             IconButton(onClick = { isEditMode = !isEditMode }) {
                                 Icon(Icons.Filled.Edit, contentDescription = "Edit Event")
                             }
-                            IconButton(onClick = {
-                                coroutineScope.launch {
-                                    viewModel.deleteEvent()
-                                    onBackToMainScreenClick()
-                                }
-                            }) {
+                            IconButton(onClick = { showDialog = true }) {
                                 Icon(Icons.Default.Clear, contentDescription = "Delete Event")
                             }
                         }
@@ -132,9 +128,13 @@ fun EventDetailScreen(
                     .verticalScroll(rememberScrollState())
             ) {
                 EventImageHeader(imageUrl = nonNullEvent.imageUrl)
+                Log.d("event",event!!.startDate.toString())
+                Log.d("event", currentDate.toString())
+                Log.d("Aaaaaaa",(event!!.startDate > currentDate).toString())
                 EventDetailsSection(
                     event = nonNullEvent,
                     isEditMode = isEditMode,
+                    isOrganizer = user?.role == Role.ORGANIZER && viewModel.eventBelongsToOrganizer,
                     coroutineScope = coroutineScope,
                     viewModel = viewModel,
                     onSave = { updatedEvent ->
@@ -163,6 +163,29 @@ fun EventDetailScreen(
             }
         }
     }
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            title = { Text("Delete Event") },
+            text = { Text("Are you sure you want to delete this event?") },
+            confirmButton = {
+                TextButton(onClick = {
+                    coroutineScope.launch {
+                        viewModel.deleteEvent()
+                        onBackToMainScreenClick()
+                    }
+                    showDialog = false
+                }) {
+                    Text("Yes")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDialog = false }) {
+                    Text("No")
+                }
+            }
+        )
+    }
 }
 
 @Composable
@@ -187,7 +210,8 @@ fun EventDetailsSection(
     isEditMode: Boolean,
     onSave: (Event) -> Unit,
     coroutineScope: CoroutineScope,
-    viewModel: EventDetailViewModel
+    viewModel: EventDetailViewModel,
+    isOrganizer: Boolean
 ) {
     var submittedReview by remember {
         mutableStateOf(false)
@@ -265,6 +289,32 @@ fun EventDetailsSection(
                         text = "Category: ${it.name.replace('_', ' ')}",
                         style = MaterialTheme.typography.bodyLarge
                     )
+                }
+            }
+            if (isOrganizer) {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
+                ) {
+                    Column(
+                        modifier = Modifier.padding(8.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text = "Scanned Tickets",
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(bottom = 4.dp)
+                        )
+                        Text(
+                            text = "${event.scannedTickets}",
+                            style = MaterialTheme.typography.headlineMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    }
                 }
             }
             Text(
@@ -417,6 +467,8 @@ fun EventTicketsSection(
     coroutineScope: CoroutineScope
 ) {
     var showAddTicketModal by remember { mutableStateOf(false) }
+    val event = viewModel.event.collectAsState()
+    val currentDate = LocalDate.now()
     tickets?.let {
         Column(modifier = Modifier.padding(16.dp)) {
             Row (
@@ -432,7 +484,7 @@ fun EventTicketsSection(
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
-                if (viewModel.eventBelongsToOrganizer) {
+                if (viewModel.eventBelongsToOrganizer && event.value!!.startDate > currentDate) {
                     ExtendedFloatingActionButton(
                         text = { Text(text = "Add ticket") },
                         icon = { Icon(Icons.Default.Add, contentDescription = "Add Ticket") },
@@ -474,6 +526,8 @@ fun TicketCard(
 ) {
     var showDialog by remember { mutableStateOf(false) }
     val isRegistered = userRegistrations?.any { reg -> reg.eventInfo.id == ticket.id } == true
+    val event = viewModel.event.collectAsState()
+    val currentDate = LocalDate.now()
 
     Card(
         modifier = Modifier
@@ -482,7 +536,7 @@ fun TicketCard(
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
         elevation = CardDefaults.cardElevation()
     ) {
-        if (viewModel.eventBelongsToOrganizer) {
+        if (viewModel.eventBelongsToOrganizer && event.value!!.startDate > currentDate) {
             IconButton(onClick = {
                 coroutineScope.launch {
                     viewModel.deleteTicket(ticket)
@@ -602,7 +656,7 @@ fun TicketInfoDialog(ticket: EventTicket, onDismiss: () -> Unit, onConfirm: () -
                 Spacer(modifier = Modifier.padding(10.dp))
                 Text(
                     text = "Visit these authorized ticket sellers links for purchasing this ticket:" +
-                            " https://m.iabilet.ro/$eventName\n\n",
+                            " https://exampleUrl.com/$eventName\n\n",
                     style = MaterialTheme.typography.bodyLarge,
                     textAlign = TextAlign.Justify,
                 )

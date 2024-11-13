@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import com.arcgismaps.ApiKey
 import com.arcgismaps.ArcGISEnvironment
 import com.example.eventtrackerkotlincompose.ui.theme.EventTrackerKotlinComposeTheme
-import com.meet.nestednavigationjc.navigation.graphs.RootNavGraph
+import com.example.eventtrackerkotlincompose.navigation.graphs.RootNavGraph
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

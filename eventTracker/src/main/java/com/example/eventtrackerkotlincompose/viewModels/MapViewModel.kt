@@ -67,10 +67,6 @@ class MapViewModel(application: Application) : AndroidViewModel(application) {
                             val geocodeResults = locatorTask.geocode(event.location.city + " " + event.location.street).getOrNull()
                             val firstResult = geocodeResults?.get(0)
                             if (firstResult != null) {
-                                Log.d(
-                                    "coords",
-                                    firstResult.displayLocation?.x.toString() + " " + firstResult.displayLocation?.y
-                                )
                                 firstResult.displayLocation?.let {p ->
                                     addPointToGraphicsOverlay(p)
                                     pointsList.add(p)

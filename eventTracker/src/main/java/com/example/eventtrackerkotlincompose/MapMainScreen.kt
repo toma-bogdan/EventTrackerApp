@@ -165,7 +165,7 @@ fun EventBottomSheet(events: List<Event>, onEventClick: (Int) -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .heightIn(min = 200.dp, max = 330.dp)
+            .heightIn(min = 200.dp, max = 350.dp)
             .background(MaterialTheme.colors.surface)
     ) {
         if (events.isNotEmpty()) {

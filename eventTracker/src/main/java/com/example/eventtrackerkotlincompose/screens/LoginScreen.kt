@@ -94,11 +94,7 @@ fun Login(
                     password = it
                 })
 
-            Spacer(modifier = Modifier.height(40.dp))
-            UnderLinedTextComponent(
-                value = stringResource(id = R.string.forgot_password),
-                onTextSelected = {onForgotPassword()})
-            Spacer(modifier = Modifier.height(40.dp))
+            Spacer(modifier = Modifier.height(80.dp))
 
             if (viewModel.isLoading) {
                 Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxWidth()) {

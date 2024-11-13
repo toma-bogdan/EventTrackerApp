@@ -1,15 +1,12 @@
-package com.meet.nestednavigationjc.navigation.graphs
+package com.example.eventtrackerkotlincompose.navigation.graphs
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.eventtrackerkotlincompose.navigation.Graph
-import com.example.eventtrackerkotlincompose.navigation.graphs.addEventNavGraph
-import com.example.eventtrackerkotlincompose.navigation.graphs.authNavGraph
-import com.example.eventtrackerkotlincompose.navigation.graphs.homeNavGraph
-import com.example.eventtrackerkotlincompose.navigation.graphs.notificationNavGraph
 import com.example.eventtrackerkotlincompose.screens.main.MainScreen
+import com.meet.nestednavigationjc.navigation.graphs.settingNavGraph
 
 @Composable
 fun RootNavGraph(isAuth : Boolean) {
@@ -25,7 +22,6 @@ fun RootNavGraph(isAuth : Boolean) {
             MainScreen(rootNavHostController = rootNavController)
         }
         homeNavGraph(rootNavController)
-        notificationNavGraph(rootNavController)
         settingNavGraph(rootNavController)
         addEventNavGraph(rootNavController)
     }

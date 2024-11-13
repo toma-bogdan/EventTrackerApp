@@ -151,9 +151,6 @@ class EventsRepository ( private val httpService: HttpService) {
     suspend fun updateOrganizer(token: String, description: String, organizerName: String, organizerId: Int): Organizer {
         val updateOrganizer = UpdateOrganizer(organizerName,description)
         val response = httpService.updateOrganizer(token, updateOrganizer, organizerId)
-        Log.d("aaaa",response.toString())
-        Log.d("bbbb",updateOrganizer.toString())
-        Log.d("Aaaa",token)
         if (response.status != HttpStatusCode.OK) {
             throw Exception("Error updating organizer!")
         } else {
@@ -184,6 +181,15 @@ class EventsRepository ( private val httpService: HttpService) {
         val response = httpService.postEventComment(token, postUserComment)
         if (response.status != HttpStatusCode.OK) {
             throw Exception("Error posting comment!")
+        } else {
+            return response.body()
+        }
+    }
+
+    suspend fun scanTicket(token: String, ticketCode: String): Boolean {
+        val response = httpService.scanTicket(token, ticketCode)
+        if (response.status != HttpStatusCode.OK) {
+            throw Exception("Error scanning ticket!")
         } else {
             return response.body()
         }

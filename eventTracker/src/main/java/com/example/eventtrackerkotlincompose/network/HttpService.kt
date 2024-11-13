@@ -175,6 +175,7 @@ class HttpService(private val client: HttpClient) {
         }
     }
     suspend fun addLocation(token: String, createLocation: CreateLocation): HttpResponse {
+        Log.d("aaaaa", createLocation.toString())
         return client.post("${AppConfig.SERVER_URL}/postLocation") {
             headers {
                 append(HttpHeaders.Authorization, "Bearer $token")
@@ -272,6 +273,14 @@ class HttpService(private val client: HttpClient) {
                 append(HttpHeaders.Authorization, "Bearer $token")
             }
             setBody(postUserComment)
+        }
+    }
+    suspend fun scanTicket(token: String, ticketCode: String): HttpResponse {
+        return client.post("${AppConfig.SERVER_URL}/events/scanTicket/${ticketCode}") {
+            contentType(ContentType.Application.Json)
+            headers {
+                append(HttpHeaders.Authorization, "Bearer $token")
+            }
         }
     }
 }

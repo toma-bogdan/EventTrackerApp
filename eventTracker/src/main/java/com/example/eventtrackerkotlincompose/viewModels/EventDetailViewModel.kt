@@ -75,6 +75,7 @@ class EventDetailViewModel(
                 if (!token.isNullOrEmpty()) {
                     try {
                         _event.value = eventsRepository.getEvent(token, eventId)
+                        Log.d("event",_event.value.toString())
                         _eventTickets.value = eventsRepository.getEventInfo(token, eventId)
                         eventBelongsToOrganizer(_event.value!!.id)
                         ratings = eventsRepository.getEventRating(token, eventId)
@@ -82,9 +83,6 @@ class EventDetailViewModel(
                             eventRating = ratings.map { it.rating }.average()
                         }
                         eventComments = eventsRepository.getUserComments(token, eventId)
-                        Log.d("comments",eventComments.toString());
-                        Log.d("ratings", ratings.toString())
-                        Log.d("rating", eventRating.toString())
                     } catch (e: Exception) {
                         val error = e.localizedMessage ?: "Unknown error"
                         Log.e("error", error)
@@ -196,6 +194,7 @@ class EventDetailViewModel(
     }
 
     suspend fun deleteEvent() {
+//        eventsRepository.deleteEvent(userToken.value!!, eventId)
         EventBus.publish(EventBus.Event.EventDeleted(_event.value!!.id))
     }
     suspend fun addComment(comment: String) {

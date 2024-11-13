@@ -34,7 +34,6 @@ class HomeScreenViewModel(application: Application): AndroidViewModel(applicatio
                 if (!it.isNullOrEmpty()) {
                     val response = eventsRepository.getAllEvents(userToken.value!!)
                     events = response
-                    Log.d("events", response.toString())
                 }
             }
         }

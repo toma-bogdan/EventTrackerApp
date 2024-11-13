@@ -122,7 +122,6 @@ class AddEventViewModel (application: Application): AndroidViewModel(application
                             imageUrl,
                             selectedCategory
                         )
-                        Log.d("bbbb", eventResponse.toString())
                         if (isFreeEntry) {
                             val response = eventsRepository.addEventTicket(
                                 token = userTokenValue,

@@ -6,7 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.eventtrackerkotlincompose.navigation.AddEventRouteScreen
 import com.example.eventtrackerkotlincompose.navigation.Graph
-import com.example.eventtrackerkotlincompose.screens.notification.AddEventScreen
+import com.example.eventtrackerkotlincompose.screens.addEvent.AddEventScreen
 
 fun NavGraphBuilder.addEventNavGraph(rootNavController: NavController) {
     navigation(
@@ -14,7 +14,7 @@ fun NavGraphBuilder.addEventNavGraph(rootNavController: NavController) {
         startDestination = AddEventRouteScreen.AddEvent.route
     ) {
         composable(route = AddEventRouteScreen.AddEvent.route) {
-            AddEventScreen(onBackToMainScreenClick = {rootNavController.navigateUp()}, onEventAdded = {})
+            AddEventScreen(onBackToMainScreenClick = {rootNavController.navigateUp()})
         }
     }
 }

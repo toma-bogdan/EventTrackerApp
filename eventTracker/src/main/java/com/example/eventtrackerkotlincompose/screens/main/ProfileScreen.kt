@@ -86,7 +86,6 @@ fun ProfileScreen(
     var showChangePasswordModal by remember { mutableStateOf(false) }
 
     LaunchedEffect(selectedImageUri) {
-        Log.d("din launch","din launch effect cu $selectedImageUri")
         selectedImageUri?.let {
             viewModel.changeProfileImage(it, context)
             selectedImageUri = null

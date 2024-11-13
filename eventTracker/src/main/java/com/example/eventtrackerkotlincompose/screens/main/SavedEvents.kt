@@ -140,7 +140,8 @@ fun EventList(
                         onEventClick = onEventClick,
                         onScanTicketClick = { startQrScannerActivity(context) },
                         getTicketCode = getTicketCode,
-                        isOrganizer = isOrganizer
+                        isOrganizer = isOrganizer,
+                        isPast = true
                     )
                 }
             }
@@ -154,7 +155,8 @@ fun RegisteredEventCard(
     onEventClick: (Int) -> Unit,
     onScanTicketClick: () -> Unit,
     getTicketCode: (Int) -> String,
-    isOrganizer: Boolean
+    isOrganizer: Boolean,
+    isPast: Boolean = false
 ) {
     Card(
         shape = MaterialTheme.shapes.medium,
@@ -240,23 +242,25 @@ fun RegisteredEventCard(
             }
 
             if (isOrganizer) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 8.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Button(
-                        onClick = onScanTicketClick,
-                        colors = ButtonDefaults.buttonColors(Color(0xFF92A3FD))
+                if (!isPast) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 8.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Text("Scan Tickets")
-                    }
-                    Button(
-                        onClick = { onEventClick(event.id) },
-                        colors = ButtonDefaults.buttonColors(Color(0xFF92A3FD))
-                    ) {
-                        Text("Edit Event")
+                        Button(
+                            onClick = onScanTicketClick,
+                            colors = ButtonDefaults.buttonColors(Color(0xFF92A3FD))
+                        ) {
+                            Text("Scan Tickets")
+                        }
+                        Button(
+                            onClick = { onEventClick(event.id) },
+                            colors = ButtonDefaults.buttonColors(Color(0xFF92A3FD))
+                        ) {
+                            Text("Edit Event")
+                        }
                     }
                 }
             } else {

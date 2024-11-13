@@ -86,7 +86,6 @@ fun MainScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Log.d("routeeeee",currentRoute.toString())
                     if (user?.role != Role.USER && topBarTitle == "Home") {
                         ExtendedFloatingActionButton(
                             onClick = { rootNavHostController.navigate(AddEventRouteScreen.AddEvent.route) },

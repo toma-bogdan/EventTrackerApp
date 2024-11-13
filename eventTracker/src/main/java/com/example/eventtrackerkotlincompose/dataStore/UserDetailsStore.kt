@@ -24,6 +24,17 @@ class UserDetailsStore(private val context: Context) {
         private val ORGANIZER_KEY = stringPreferencesKey("organizer")
     }
 
+    val getToken: Flow<String?> = context.dataStore.data
+        .map { preferences ->
+            preferences[USER_TOKEN_KEY] ?: ""
+        }
+
+    suspend fun saveToken(token: String) {
+        context.dataStore.edit { preferences ->
+            preferences[USER_TOKEN_KEY] = token
+        }
+    }
+
     val getOrganizer: Flow<Organizer?> = context.dataStore.data
         .map { preferences->
             preferences[ORGANIZER_KEY]?.let { Json.decodeFromString(it) }
@@ -60,16 +71,6 @@ class UserDetailsStore(private val context: Context) {
         }
     }
 
-    val getToken: Flow<String?> = context.dataStore.data
-        .map { preferences ->
-            preferences[USER_TOKEN_KEY] ?: ""
-        }
-
-    suspend fun saveToken(token: String) {
-        context.dataStore.edit { preferences ->
-            preferences[USER_TOKEN_KEY] = token
-        }
-    }
     suspend fun clearUserDetails() {
         context.dataStore.edit {preferences ->
             preferences.clear()

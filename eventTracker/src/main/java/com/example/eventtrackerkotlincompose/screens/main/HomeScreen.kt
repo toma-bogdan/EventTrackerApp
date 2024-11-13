@@ -50,6 +50,7 @@ import com.example.eventtrackerkotlincompose.config.AppConfig
 import com.example.eventtrackerkotlincompose.network.Category
 import com.example.eventtrackerkotlincompose.network.Event
 import com.example.eventtrackerkotlincompose.viewModels.HomeScreenViewModel
+import java.time.LocalDate
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -62,6 +63,7 @@ fun HomeScreen(
 ) {
     var selectedCategory by remember { mutableStateOf<Category?>(null) }
     var categoryMenuExpanded by remember { mutableStateOf(false) }
+    val currentDate = LocalDate.now()
 
     Column(modifier = Modifier.padding(innerPadding)) {
         ExposedDropdownMenuBox(
@@ -123,7 +125,7 @@ fun HomeScreen(
         } else {
             val filteredEvents = viewModel.events!!.filter { event ->
                 (searchQuery.isEmpty() || event.name.contains(searchQuery, ignoreCase = true)) &&
-                        (selectedCategory == null || event.category == selectedCategory)
+                        (selectedCategory == null || event.category == selectedCategory) && event.startDate > currentDate
             }
 
             if (filteredEvents.isEmpty()) {
